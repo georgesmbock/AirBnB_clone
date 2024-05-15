@@ -34,7 +34,7 @@ jobs:
   #   - opened
   # On main branch
   # branches:
-      - 'main'
+  # - 'main'
   # Before to modified all file.py
   # paths:
   #    - '*.py'
