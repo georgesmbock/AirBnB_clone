@@ -1,36 +1,58 @@
-name: Run tests
+name: Pycodestyle Check
 
 on:
   # On main branch
   push:
    branches:
-     - 'main'
-  # trigger or event
-  pull_request:
-  # when the extraction resquest is initiated or opened
-    type:
-      - opened
-  # On main branch
-    branches:
-      - 'main'
-  # Before to modified all file.py
-    paths:
-      - '*.py'
+     - main
+
 jobs:
-  test:
+  pycodestyle:
+    name: Check Code Style
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
-        with:
-          fetch-depth: 0
-      - name: Update packages
-        run: sudo apt update
-      - name: Launch installation ycodestyle
-        run: sudo apt install -y pycodestyle
-      - name: Check code
-        run: pycodestyle --first *.py
-      - name: Message
-        run: echo "Check Success !"
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setupp-python@v2
+      with:
+        python-version: 3.8.5
+
+    - name: Install dependencies
+      run: |
+       python -m pip install --upgrade pip
+       pip install pycodestyle
+    - name: Run Pycodestyle 2.8.*
+      run: |
+       pycodestyle . 
+     # trigger or event
+     # pull_request:
+  # when the extraction resquest is initiated or opened
+  #type:
+  #   - opened
+  # On main branch
+  # branches:
+      - 'main'
+  # Before to modified all file.py
+  # paths:
+  #    - '*.py'
+  #jobs:
+  #test:
+  # runs-on: ubuntu-latest
+
+        # steps:
+        #- name: Checkout
+        #uses: actions/checkout@v4.1.1
+        #with:
+        # fetch-depth: 0
+        #- name: Update packages
+        #run: sudo apt update
+        #- name: Launch installation ycodestyle
+        #run: sudo apt install -y pycodestyle
+         #-name: Check code
+         #run: pycodestyle --first *.py
+         #- name: Message
+     run: echo "Check Success !"
 
