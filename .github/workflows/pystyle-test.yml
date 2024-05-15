@@ -1,0 +1,37 @@
+name: Run tests
+on:
+  # Sur la branche main également
+  push:
+    branches:
+      - 'main'
+  # Déclencheur ou événement
+  pull_request:
+  # Lors de la demende d'extraction est initiée ou ouverte
+      types:
+      - opened
+  # Sur la branche main
+      branches:
+      - 'main'
+  # Ayant pour objet la modification de main.py
+      paths:
+      - '*.py'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pycodestyle
+      - name: Run Pycodestyle
+        run: pycodestyle --first *.py
+      - name: Message
+        run: echo "Check Success !"
