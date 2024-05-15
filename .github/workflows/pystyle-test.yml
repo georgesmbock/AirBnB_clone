@@ -2,9 +2,9 @@ name: Run tests
 
 on:
   # On main branch
-  #push:
-  # branches:
-  #   - 'main'
+  push:
+   branches:
+     - main
   # trigger or event
   pull_request:
   # when the extraction resquest is initiated or opened
@@ -12,7 +12,7 @@ on:
       - opened
   # On main branch
     branches:
-      - 'main'
+      - main
   # Before to modified all file.py
     paths:
       - '*.py'
