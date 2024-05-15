@@ -1,2 +1,3 @@
-#!/usr/bin/python3
-prin t "check workfl !"
+#!/usr/bin/python 3
+ p
+ r "check workfl !"
