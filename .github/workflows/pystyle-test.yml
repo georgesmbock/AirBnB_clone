@@ -1,8 +1,6 @@
 name: Pycodestyle Check
 
-on:
-  # On main branch
-  push:
+on: [push, pull_request]
    branches:
      - 'main'
 
