@@ -2,9 +2,9 @@ name: Pycodestyle Check
 
 on:
   # On main branch
-  push:
+  pull_request:
    branches:
-     - main
+     - 'main'
 
 jobs:
   pycodestyle:
