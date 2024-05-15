@@ -1,3 +1,2 @@
 #!/usr/bin/python 3
- p
- r "check workfl !"
+print "check workfl !"
