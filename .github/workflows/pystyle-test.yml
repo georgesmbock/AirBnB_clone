@@ -55,6 +55,6 @@ jobs:
         #run: sudo apt install -y pycodestyle
          #-name: Check code
          #run: pycodestyle --first *.py
-         #- name: Message
-     run: echo "Check Success !"
+    - name: Message
+      run: echo "Check Success !"
 
