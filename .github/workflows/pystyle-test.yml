@@ -1,8 +1,16 @@
 name: Pycodestyle Check
 
-on: [push, pull_request]
+on: 
+  push:
    branches:
-     - 'main'
+    - 'main'
+  pull_reequest:
+    type:
+      - opened
+    branches:
+      - 'main'
+    paths:
+      - '.'
 
 jobs:
   pycodestyle:
