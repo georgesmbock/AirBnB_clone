@@ -1,3 +1,1 @@
-print
-"
-  merci"
+print"merci"
