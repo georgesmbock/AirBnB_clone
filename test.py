@@ -1,3 +1,1 @@
- prin
- t"
-ec"
+print "merci"
