@@ -6,11 +6,35 @@ from datetime import datetime
 class BaseModel:
     """This class defines all common attributes/methods for other classes."""
 
-    def __init__(self):
-        """It's initializer of our class"""
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    def __init__(self, *args, **kwargs):
+        """It's initializer of our class with *args and **kwargs.
+        if kwarg is not empty:
+        - each key this dictionary is an
+        attribute name(Note __class from kwargs is the only one
+        that should not be added as an attriibute.
+        - each value of this dictionaryy is the value of this
+        attribute name
+        - Warning: created_at and updated_at are strings in this
+        dictionary, but inside your Basemodel instance is
+        working with datetime object. You have to convert these string into
+        datetime object. Tip:you know the string format of these datetime.
+        otherwise:
+        - create id and created_at as you did previously(new instance).
+
+        Args:
+            *args: no used
+            **kwargs: second argument
+        """
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == 'created_at' or key == 'updated_at':
+                    setattr(self, key, parse(value))
+                else:
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def save(self):
         """This method uppdates the public instance attribute updated_at
