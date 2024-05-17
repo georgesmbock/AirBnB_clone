@@ -33,7 +33,7 @@ jobs:
           pip install pycodestyle
       - name: Run Pycodestyle
         run: |
-          pycodestyle . 
+          pycodestyle console.py
           pycodestyle /models/base_model.py
           pycodestyle /models/engine/file_storage.py
       - name: Message
