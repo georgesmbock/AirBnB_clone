@@ -33,8 +33,8 @@ jobs:
           pip install pycodestyle
       - name: Run Pycodestyle
         run: |
-          pycodestyle --first . 
-          pycodestyle --first ./models/base_model.py 
-          pycodestyle --first ./models/engine/file_storage.py
+          pycodestyle . 
+          pycodestyle ./models/*
+          pycodestyle ./models/engine/*
       - name: Message
         run: echo "Check Success !"
