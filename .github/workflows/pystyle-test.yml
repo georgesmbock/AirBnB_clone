@@ -34,7 +34,7 @@ jobs:
       - name: Run Pycodestyle
         run: |
           pycodestyle console.py
-          pycodestyle /models/base_model.py
-          pycodestyle /models/engine/file_storage.py
+          pycodestyle ./models/base_model.py
+          pycodestyle ./models/engine/file_storage.py
       - name: Message
         run: echo "Check Success !"
