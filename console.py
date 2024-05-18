@@ -9,7 +9,8 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     classes = {
-                "BaseModel": BaseModel
+                "BaseModel": BaseModel,
+                "User": User
            }
 
     def do_help(self, line):
