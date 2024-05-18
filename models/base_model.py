@@ -1,11 +1,13 @@
 #!/usr/bin/python3
+"""The base model script"""
+
 import uuid
 from datetime import datetime
 
 
 class BaseModel:
     """
-    Base class that defines all the common 
+    Base class that defines all the common
     attribute/methods for other classes
     """
 
@@ -14,6 +16,8 @@ class BaseModel:
         instantiates an object with its
         attributes
         """
+        from models import storage
+        """Import here to avoid circular import"""
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -25,6 +29,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """
@@ -37,13 +42,18 @@ class BaseModel:
         """
         Update the updated_at with current datetime
         """
+        from models import storage
+        """Import here to avoid circular import"""
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
         Returns a dictionary containing all keys/values
         of__dict__of the instance
         """
+        from models import storage
+        """import here to avoid circular import"""
         instance_dict = {**self.__dict__}
         instance_dict['__class__'] = type(self).__name__
         instance_dict['created_at'] = instance_dict['created_at'].isoformat()
