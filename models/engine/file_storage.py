@@ -2,6 +2,7 @@
 import json
 from os import path
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -48,7 +49,7 @@ class FileStorage:
         for key, value in self.__objects.items():
             serialized_objects[key] = value.to_dict()
 
-        with open(self.__file_path, 'w') as f:
+        with open(self.__file_path, 'a') as f:
             json.dump(serialized_objects, f, indent=2)
 
     def reload(self):
@@ -70,3 +71,11 @@ class FileStorage:
                     self.__objects[key] = obj
             except json.JSONDecodeError:
                 pass
+
+    def delete(self, obj=None):
+        """Deletes obj from _objects"""
+        if obj:
+            key = obj.__class__.__name__ + '.' + obj.id
+            if key in self.__objects:
+                del self.__objects[key]
+                self.save()
