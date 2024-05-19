@@ -1,62 +1,75 @@
 #!/usr/bin/python3
-"""The base model script"""
-
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
-    """
-    Base class that defines all the common
-    attribute/methods for other classes
-    """
+    """This class defines all common attributes/methods for other classes."""
 
     def __init__(self, *args, **kwargs):
+        """It's initializer of our class with *args and **kwargs.
+        if kwarg is not empty:
+        - each key this dictionary is an
+        attribute name(Note __class from kwargs is the only one
+        that should not be added as an attriibute.
+        - each value of this dictionaryy is the value of this
+        attribute name
+        - Warning: created_at and updated_at are strings in this
+        dictionary, but inside your Basemodel instance is
+        working with datetime object. You have to convert these string into
+        datetime object. Tip:you know the string format of these datetime.
+        otherwise:
+        - create id and created_at as you did previously(new instance).
+
+        Args:
+            *args: no used
+            **kwargs: second argument
         """
-        instantiates an object with its
-        attributes
-        """
-        from models import storage
-        """Import here to avoid circular import"""
         if kwargs:
             for key, value in kwargs.items():
-                if key != '__class__':
+                if key == "__class__":
+                    continue
+                elif key == 'created_at' or key == 'updated_at':
+                    iso = "%Y-%m-%dT%H:%M:%S.%f"
+                    setattr(self, key, datetime.strptime(value, iso))
+                else:
                     setattr(self, key, value)
-                    if key in ["created_at", "updated_at"]:
-                        setattr(self, key, datetime
-                                .strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                self.id = str(uuid.uuid4())
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
-
-    def __str__(self):
-        """
-        Returns the string representation of the instance.
-        """
-        return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
 
     def save(self):
+        """This method uppdates the public instance attribute updated_at
+        with the current datetime.
+
+        Args: None
+        Return: None
         """
-        Update the updated_at with current datetime
-        """
-        from models import storage
-        """Import here to avoid circular import"""
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
-        """
-        Returns a dictionary containing all keys/values
-        of__dict__of the instance
-        """
-        from models import storage
-        """import here to avoid circular import"""
-        instance_dict = {**self.__dict__}
-        instance_dict['__class__'] = type(self).__name__
-        instance_dict['created_at'] = instance_dict['created_at'].isoformat()
-        instance_dict['updated_at'] = instance_dict['updated_at'].isoformat()
+        """This method returns a dictionary containing all keys/values
+        of __dict__ of the instance.
 
-        return instance_dict
+        Args: None
+        Returns: a dictionary
+        """
+        ob_dict = self.__dict__.copy()
+        ob_dict['__class__'] = self.__class__.__name__
+        ob_dict['created_at'] = self.created_at.isoformat()
+        ob_dict['updated_at'] = self.updated_at.isoformat()
+        return ob_dict
+
+    def __str__(self):
+        """This magic method prints:
+        [<class name>] (<self.id>) <self.__dict__>
+
+        Args: None
+        Returns: The format
+        """
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"

@@ -1,48 +1,86 @@
 #!/usr/bin/python3
-"""The FileStorage script"""
 import json
-import os
+from os import path
 from models.base_model import BaseModel
-"""class that serializes instance to a JSON file and deserializes JSON file"""
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
-    """string-path to the JSON file"""
+    """This class serializes intances to JSON file and
+    deserializes JSON file to instances.
+    She has two private class attributes:
+    __file_pat: string - path to the JSON file (ex:file.jsonh)
+    __objects: dictionary - empty but will store all objects
+    by <class>.id
+    (ex: to store a BaseModel object with id=12121212, the
+    key will be BaseModel.12121212)
+    """
+
     __file_path = 'file.json'
-    """dictionary that stores all objects by class name"""
     __objects = {}
 
-    def __init__(self):
-        """Initialize the FileStorage instance."""
-        self.__objects = {}
-
     def all(self):
-        """returns the dictionary objects."""
-        return self.__objects.copy()
+        """This method returns the dictionary __objects
+
+        Args: None
+        Return: Dictionary
+        """
+        return self.__objects
 
     def new(self, obj):
-        """set in obj with key"""
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        """This method sets in _objects the obj with key
+        <obj class name>.id
+
+        Args:
+        obj: Dictionary
+        Return: None
+        """
+        key = f"{type(obj).__name__}.{obj.id}"
         self.__objects[key] = obj
 
     def save(self):
-        """serializes __objects to the JSON file"""
-        my_objects = {}
-        for key, obj in self.__objects.items():
-            my_objects[key] = obj.to_dict()
-        with open(self.__file_path, 'w') as file:
-            json.dump(my_objects, file)
+        """This method serializes _objects to the
+        JSON file (path: _file_path)
+
+        Args: None
+        Return: file
+        """
+        serialized_objects = {}
+        for key, value in self.__objects.items():
+            serialized_objects[key] = value.to_dict()
+
+        with open(self.__file_path, 'a') as f:
+            json.dump(serialized_objects, f, indent=2)
 
     def reload(self):
-        """Deserializes the JSON file without raising exception"""
-        from models.base_model import BaseModel
-        """Import here to avoid circular import"""
+        """This methods deserializes the JSON file
+        to __objects (only if the JSON file (__file_path)
+        exists; otherwise, do nothing. If the file doesn’t
+        exist, no exception should be raised)
 
-        if os.path.exists(self.__file_path):
-            with open(self.__file_path, 'r') as file:
-                data = json.load(file)
-                """reset the __objects dict"""
-                self.__objects.clear()
-                for key, obj_dict in data.items():
-                    class_name, obj_id = key.split('.')
-                    self.__objects[key] = BaseModel(**obj_dict)
+        Args: None
+        Return: None
+        """
+        if path.exists(self.__file_path):
+            try:
+                with open(self.__file_path, "r") as json_file:
+                    data = json.load(json_file)
+                    for key, value in data.items():
+                        class_name = value["__class__"]
+                    obj = eval(class_name)(**value)
+                    self.__objects[key] = obj
+            except json.JSONDecodeError:
+                pass
+
+    def delete(self, obj=None):
+        """Deletes obj from _objects"""
+        if obj:
+            key = obj.__class__.__name__ + '.' + obj.id
+            if key in self.__objects:
+                del self.__objects[key]
+                self.save()

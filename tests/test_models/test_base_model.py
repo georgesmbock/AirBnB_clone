@@ -1,37 +1,49 @@
 #!/usr/bin/python3
 import unittest
-from models.base_model import BaseModel
 from datetime import datetime
+from unittest.mock import patch
+from models.base_model import BaseModel
+from models import storage
 
 
 class TestBaseModel(unittest.TestCase):
-
     def setUp(self):
-        self.model = BaseModel()
+        self.base_model = BaseModel()
 
-    def test_init(self):
-        self.assertIsInstance(self.model.id, str)
-        self.assertIsInstance(self.model.created_at, datetime)
-        self.assertIsInstance(self.model.updated_at, datetime)
+    def test_instance_attributes(self):
+        self.assertTrue(hasattr(self.base_model, 'id'))
+        self.assertTrue(hasattr(self.base_model, 'created_at'))
+        self.assertTrue(hasattr(self.base_model, 'updated_at'))
 
-    def test_str_rep(self):
-        expected_str = f"[BaseModel] ({self.model.id}) {self.model.__dict__}"
-        self.assertEqual(str(self.model), expected_str)
+    def test_id_generation(self):
+        self.assertIsInstance(self.base_model.id, str)
 
-    def test_save(self):
-        created_at = self.model.created_at
-        self.model.save()
-        self.assertNotEqual(created_at, self.model.updated_at)
+    def test_created_at_and_updated_at(self):
+        self.assertIsInstance(self.base_model.created_at, datetime)
+        self.assertIsInstance(self.base_model.updated_at, datetime)
 
-    def test_to_dict(self):
-        model_dict = self.model.to_dict()
-        expected_keys = ['id', 'created_at', 'updated_at', '__class__']
-        self.assertCountEqual(model_dict.keys(), expected_keys)
-        self.assertEqual(model_dict['__class__'], 'BaseModel')
-        self.assertIsInstance(datetime.fromisoformat(model_dict
-                                                     ['created_at']), datetime)
-        self.assertIsInstance(datetime.fromisoformat
-                              (model_dict['updated_at']), datetime)
+    def test_save_method(self):
+        initial_updated_at = self.base_model.updated_at
+        with patch('models.storage.new') as mock_new, \
+             patch('models.storage.save') as mock_save:
+            self.base_model.save()
+            self.assertNotEqual(initial_updated_at,
+                                self.base_model.updated_at)
+            mock_new.assert_called_once_with(self.base_model)
+            mock_save.assert_called_once()
+
+    def test_to_dict_method(self):
+        obj_dict = self.base_model.to_dict()
+        self.assertIsInstance(obj_dict, dict)
+        self.assertEqual(obj_dict['__class__'], 'BaseModel')
+        self.assertIn('id', obj_dict)
+        self.assertIn('created_at', obj_dict)
+        self.assertIn('updated_at', obj_dict)
+
+    def test_str_method(self):
+        expected_str = "[BaseModel] ({}) {}".format(self.base_model.id,
+                                                    self.base_model.__dict__)
+        self.assertEqual(str(self.base_model), expected_str)
 
     if __name__ == '__main__':
         unittest.main()
