@@ -1,6 +1,12 @@
 #!/usr/bin/python3
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 import models
 
 
@@ -15,7 +21,7 @@ class HBNBCommand(cmd.Cmd):
                 "City": City,
                 "Amenity": Amenity,
                 "Place": Place,
-                "Review": review
+                "Review": Review
            }
 
     def do_help(self, line):
@@ -105,22 +111,18 @@ class HBNBCommand(cmd.Cmd):
         EX: $ all BaseModel
             $ all
         """
-        line = lines.split()
-        if len(line) == 0:
+        if not lines:
             all_obj = models.storage.all()
-            print([str(obj) for obj in all_obj.values()])
+        elif lines in HBNBCommand.classes:
+            all_obj = models.storage.all(HBNBCommand.classes[lines])
         else:
-            if line[0] not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            all_obj = models.storage.all()
-            class_name = line[0]
-            instances = [
+            print("** class doesn't exist **")
+            return
+        instances = [
                     str(obj)
                     for obj in all_obj.values()
-                    if type(obj).__name__ == class_name
-                        ]
-            print(instances)
+                    ]
+        print(instances)
 
     def do_update(self, lines):
         """Updates an instances based on the class name and id by
