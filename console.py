@@ -20,8 +20,8 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """shouldn't execute anything"""
-        return True
+        """should not execute anything"""
+        pass
 
 
 if __name__ == '__main__':
