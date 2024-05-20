@@ -6,12 +6,10 @@ class HBNBCommand(cmd.Cmd):
     """This class contains the entry point of
     the command interpreter
     """
-    prompt = '(hbnb)'
+    prompt = '(hbnb) '
 
     def do_quit(self, line):
-        """This method allows you to get out of the
-        interpreter
-        EX: (hbnb) quit
+        """Quit command to exit the program
         """
         return True
 
