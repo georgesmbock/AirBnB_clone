@@ -15,13 +15,13 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     classes = {
-                "BaseModel": BaseModel,
-                "User": User,
-                "State": State,
-                "City": City,
-                "Amenity": Amenity,
-                "Place": Place,
-                "Review": Review
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
            }
 
     def do_help(self, line):
@@ -122,6 +122,7 @@ class HBNBCommand(cmd.Cmd):
                     str(obj)
                     for obj in all_obj.values()
                     ]
+        # if type(obj).__name__ == class_name
         print(instances)
 
     def do_update(self, lines):
