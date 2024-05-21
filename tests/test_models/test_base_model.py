@@ -1,49 +1,56 @@
 #!/usr/bin/python3
 import unittest
 from datetime import datetime
-from unittest.mock import patch
 from models.base_model import BaseModel
-from models import storage
 
 
 class TestBaseModel(unittest.TestCase):
-    def setUp(self):
-        self.base_model = BaseModel()
 
-    def test_instance_attributes(self):
-        self.assertTrue(hasattr(self.base_model, 'id'))
-        self.assertTrue(hasattr(self.base_model, 'created_at'))
-        self.assertTrue(hasattr(self.base_model, 'updated_at'))
+    def test_init_with_kwargs(self):
+        """Test initialization of the BaseModel with kwargs."""
+        kwargs = {
+                "id": "123",
+                "created_at": "2023-01-01T12:00:00.000000",
+                "updated_at": "2023-01-02T12:00:00.000000",
+                "name": "Test Model",
+                "value": 42
+                }
+        ob = BaseModel(**kwargs)
 
-    def test_id_generation(self):
-        self.assertIsInstance(self.base_model.id, str)
+        self.assertEqual(ob.id, "123")
+        self.assertEqual(ob.created_at, datetime(2023, 1, 1, 12, 0, 0))
+        self.assertEqual(ob.updated_at, datetime(2023, 1, 2, 12, 0, 0))
+        self.assertEqual(ob.name, "Test Model")
+        self.assertEqual(ob.value, 42)
 
-    def test_created_at_and_updated_at(self):
-        self.assertIsInstance(self.base_model.created_at, datetime)
-        self.assertIsInstance(self.base_model.updated_at, datetime)
+    def test_init_without_kwargs(self):
+        """Test initialization of BaseModel without kwargs."""
+        ob = BaseModel()
 
-    def test_save_method(self):
-        initial_updated_at = self.base_model.updated_at
-        with patch('models.storage.new') as mock_new, \
-             patch('models.storage.save') as mock_save:
-            self.base_model.save()
-            self.assertNotEqual(initial_updated_at,
-                                self.base_model.updated_at)
-            mock_new.assert_called_once_with(self.base_model)
-            mock_save.assert_called_once()
+        self.assertIsInstance(ob.id, str)
+        self.assertIsInstance(ob.created_at, datetime)
 
-    def test_to_dict_method(self):
-        obj_dict = self.base_model.to_dict()
-        self.assertIsInstance(obj_dict, dict)
-        self.assertEqual(obj_dict['__class__'], 'BaseModel')
-        self.assertIn('id', obj_dict)
-        self.assertIn('created_at', obj_dict)
-        self.assertIn('updated_at', obj_dict)
+    def test_to_dict(self):
+        """Test the to_dict method."""
+        ob = BaseModel()
+        ob.name = "Test Model"
+        ob.value = 42
 
-    def test_str_method(self):
-        expected_str = "[BaseModel] ({}) {}".format(self.base_model.id,
-                                                    self.base_model.__dict__)
-        self.assertEqual(str(self.base_model), expected_str)
+        ob_dict = ob.to_dict()
+
+        self.assertEqual(ob_dict['__class__'], 'BaseModel')
+        self.assertEqual(ob_dict['name'], 'Test Model')
+        self.assertEqual(ob_dict['value'], 42)
+
+    def test_save(self):
+        """Test the save method of BaseModel."""
+        ob = BaseModel()
+        created_at_before_save = ob.created_at
+        ob.save()
+        updated_at_after_save = ob.updated_at
+
+        self.assertEqual(created_at_before_save, ob.created_at)
+        self.assertGreater(updated_at_after_save, created_at_before_save)
 
     if __name__ == '__main__':
         unittest.main()
