@@ -102,19 +102,29 @@ class HBNBCommand(cmd.Cmd):
         EX: (hbnb) all BaseModel
             (hbnb) all
         """
+        all_obj = models.storage.all()
         if not line:
-            all_obj = models.storage.all()
+            print([str(obj) for obj in all_obj.values()])
+            return
         elif line in HBNBCommand.classes:
-            all_obj = models.storage.all()
-            all_obj[HBNBCommand.classes[line]] = line
+            class_name = line.split()[0]
         else:
             print(" ** class doesn't exist **")
             return
         instances = [
                     str(obj)
                     for obj in all_obj.values()
+                    if type(obj).__name__ == class_name
                     ]
         print(instances)
+
+    def do_test(self, line):
+        all_obj = models.storage.all()
+        print(models.storage.all())
+        for key, value in all_obj.items():
+            print(key)
+            print(value)
+        return
 
     def do_update(self, line):
         """Updates an instance based on the class name and id
@@ -129,10 +139,11 @@ class HBNBCommand(cmd.Cmd):
         """
         lines = line.split()
         if len(lines) == 0:
-            print(" ** class name mmissing **")
+            print(" ** class name missing **")
             return
-        if lines[0] not in HBNBCommand.classes:
-            print(" ** class doesn't exist **")
+        class_name = lines[0]
+        if class_name not in HBNBCommand.classes:
+            print(" ** class doesn't  exist **")
             return
         if len(lines) < 2:
             print(" ** instance id missing **")
@@ -140,32 +151,22 @@ class HBNBCommand(cmd.Cmd):
         key = lines[0] + '.' + lines[1]
         all_obj = models.storage.all()
         if key not in all_obj:
-            print(" ** no instance found **")
+            print(" ** not instance found **")
             return
-        if len(lines) == 2:
+        if len(lines) < 3:
             print(" ** attribute name missing **")
             return
-        if len(lines) == 3:
-            print(" ** value missing **")
-            return
-        obj = all_obj[key]
-        attr_name = line[2]
-        attr_value = line[3]
-        if hasattr(obj, attr_name):
-            attr_type = type(getattr(obj, attr_name))
-            try:
-                attr_value = attr_type(attr_value)
-            except ValueError:
-                print(" ** Value type error **")
-                return
+        attr_name = lines[2]
+        if len(lines) < 4:
+            print(" ** value missing ** ")
         else:
-            try:
-                attr_value = eval(attr_value)
-            except (NameError, SyntaxError):
-                pass
-        setattr(obj, attr_name, attr_value)
-        obj.save()
-
+            obj = all_obj[key]
+            attr_value = lines[3]
+            if hasattr(obj, attr_name):
+                obj.save()
+            else:
+                setattr(obj, attr_name, attr_value.strip('"'))
+                obj.save()
 
 
 if __name__ == '__main__':
