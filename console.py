@@ -66,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
         key = lines[0] + '.' + lines[1]
         all_obj = models.storage.all()
         if key not in all_obj:
-            print(" ** instance found **")
+            print(" ** no instance found **")
             return
         print(all_obj[key])
 
@@ -78,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
         """
         lines = line.split()
         if len(lines) == 0:
-            print(" ** class missing **")
+            print(" ** class name missing **")
             return
         if lines[0] not in HBNBCommand.classes:
             print(" ** class doesn't exist **")
