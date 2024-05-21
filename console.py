@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import cmd
 import models
-from models import BaseModel
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -58,7 +58,7 @@ class HBNBCommand(cmd.Cmd):
             print(" ** class missing **")
             return
         if lines[0] not in HBNBCommand.classes:
-            print(" ** class doesn't exist ** ")
+            print(" ** class doesn't exist **")
             return
         if len(lines) < 2:
             print(" ** instance id missing **")
@@ -158,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
             return
         attr_name = lines[2]
         if len(lines) < 4:
-            print(" ** value missing ** ")
+            print(" ** value missing **")
         else:
             obj = all_obj[key]
             attr_value = lines[3]
