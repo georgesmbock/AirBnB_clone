@@ -131,14 +131,6 @@ class HBNBCommand(cmd.Cmd):
                     ]
         print(instances)
 
-    def do_test(self, line):
-        all_obj = models.storage.all()
-        print(models.storage.all())
-        for key, value in all_obj.items():
-            print(key)
-            print(value)
-        return
-
     def do_update(self, line):
         """Updates an instance based on the class name and id
         by adding or updating attribute and saves into to
