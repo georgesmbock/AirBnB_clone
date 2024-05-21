@@ -1,19 +1,32 @@
 #!/usr/bin/python3
 import cmd
 import models
-from models import BaseModel
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """This class contains the entry point of
-    the command interpreter
-    """
+    """The console"""
     # The prompt is terminal is (hbnb)
     prompt = '(hbnb) '
 
     classes = {
-            "BaseModel": BaseModel
+            "BaseModel": BaseModel,
+            "User" : User,
+            "State": State,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
             }
+
+    def do_help(self, line):
+        """Displays the help according to line argument"""
+        super().do_help(line)
 
     def do_quit(self, line):
         """Quit command to exit the program
@@ -58,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
             print(" ** class missing **")
             return
         if lines[0] not in HBNBCommand.classes:
-            print(" ** class doesn't exist ** ")
+            print(" ** class doesn't exist **")
             return
         if len(lines) < 2:
             print(" ** instance id missing **")
@@ -66,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
         key = lines[0] + '.' + lines[1]
         all_obj = models.storage.all()
         if key not in all_obj:
-            print(" ** instance found **")
+            print(" ** no instance found **")
             return
         print(all_obj[key])
 
@@ -78,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
         """
         lines = line.split()
         if len(lines) == 0:
-            print(" ** class missing **")
+            print(" ** class name missing **")
             return
         if lines[0] not in HBNBCommand.classes:
             print(" ** class doesn't exist **")
@@ -158,7 +171,7 @@ class HBNBCommand(cmd.Cmd):
             return
         attr_name = lines[2]
         if len(lines) < 4:
-            print(" ** value missing ** ")
+            print(" ** value missing **")
         else:
             obj = all_obj[key]
             attr_value = lines[3]
