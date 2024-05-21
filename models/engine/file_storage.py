@@ -54,7 +54,7 @@ class FileStorage:
         for key, value in self.__objects.items():
             serialized_objects[key] = value.to_dict()
 
-        with open(self.__file_path, 'a') as f:
+        with open(self.__file_path, 'w') as f:
             json.dump(serialized_objects, f, indent=2)
 
     def reload(self):
@@ -73,6 +73,7 @@ class FileStorage:
                     for key, value in data.items():
                         class_name = value["__class__"]
                     obj = eval(class_name)(**value)
+                    obj_key = f"{class_name}.{obj.id}"
                     self.__objects[key] = obj
             except json.JSONDecodeError:
                 pass
