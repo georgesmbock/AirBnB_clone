@@ -32,6 +32,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pycodestyle
       - name: Run Pycodestyle
-        run: pycodestyle --first *.py
+        run: |
+          pycodestyle console.py
+          pycodestyle ./models/base_model.py
+          pycodestyle ./models/engine/file_storage.py
       - name: Message
         run: echo "Check Success !"
