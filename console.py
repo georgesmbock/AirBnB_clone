@@ -8,6 +8,29 @@ class HBNBCommand(cmd.Cmd):
     """The console"""
     prompt = '(hbnb) '
 
+    def do_quit(self, line):
+        """Quit command to exit the program"""
+        return True
+
+    def do_EOF(self, line):
+        """Exit the program by typing EOF (ctrl+D)"""
+        print("EOF")
+        return True
+
+    def emptyline(self):
+        """Do nothing on empty input"""
+        pass
+
+    def help_quit(self):
+        """Quit command to exit the program"""
+        print("Quit command to exit the program")
+
+    def help_help(self):
+        """List avaialable commands with 'help'
+        or detailed help with 'help cmd'."""
+        print("""List available commands with 'help' or detailed
+              help with 'help cmd'.""")
+
     classes = {
                 "BaseModel": BaseModel,
                 "User": User,
@@ -21,19 +44,6 @@ class HBNBCommand(cmd.Cmd):
     def do_help(self, line):
         """"Displays the help according to line argument"""
         super().do_help(line)
-
-    def do_EOF(self, line):
-        """EOF command to exit the program"""
-        print()
-        return True
-
-    def emptyline(self):
-        """Do nothing on empty input line"""
-        pass
-
-    def do_quit(self, line):
-        """Quit command to exit the program"""
-        return True
 
     def do_create(self, line):
         """Creates a:
