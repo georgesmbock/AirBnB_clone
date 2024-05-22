@@ -131,6 +131,19 @@ class HBNBCommand(cmd.Cmd):
                     ]
         print(instances)
 
+    def do_count(self, line):
+        """Retrieves the number of instances of a class"""
+        lines = line.split()
+        if not line:
+            print(" ** class name missing **")
+            return
+        class_name = lines[0]
+        if class_name not HBNBCommand.classes:
+            print(" ** class doesn't exist **")
+            return
+        count = len(HBNBCommand.classes[class_name].all())
+        print(count)
+
     def do_update(self, line):
         """Updates an instance based on the class name and id
         by adding or updating attribute and saves into to
