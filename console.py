@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+    Main console
+"""
 import cmd
 import models
 from models.base_model import BaseModel
@@ -133,15 +136,18 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, line):
         """Retrieves the number of instances of a class"""
-        lines = line.split()
-        if not line:
-            print(" ** class name missing **")
-            return
-        class_name = lines[0]
-        if class_name not HBNBCommand.classes:
-            print(" ** class doesn't exist **")
-            return
-        count = len(HBNBCommand.classes[class_name].all())
+        count = 0
+        if line:
+            lines = line.split()
+            if lines[0] in HBNBCommand.classes:
+                for key, obj in models.storage.all().items():
+                    if key.split('.')[0] == lines[0]:
+                        count += 1
+            else:
+                print(" ** class doesn't exist **")
+        else:
+            for key, obj in models.storage.all().items():
+                count += 1
         print(count)
 
     def do_update(self, line):
