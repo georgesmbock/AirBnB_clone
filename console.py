@@ -17,7 +17,7 @@ class HBNBCommand(cmd.Cmd):
 
     classes = {
             "BaseModel": BaseModel,
-            "User" : User,
+            "User": User,
             "State": State,
             "Amenity": Amenity,
             "Place": Place,
@@ -130,14 +130,6 @@ class HBNBCommand(cmd.Cmd):
                     if type(obj).__name__ == class_name
                     ]
         print(instances)
-
-    def do_test(self, line):
-        all_obj = models.storage.all()
-        print(models.storage.all())
-        for key, value in all_obj.items():
-            print(key)
-            print(value)
-        return
 
     def do_update(self, line):
         """Updates an instance based on the class name and id
