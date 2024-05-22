@@ -134,22 +134,6 @@ class HBNBCommand(cmd.Cmd):
                     ]
         print(instances)
 
-    def do_count(self, line):
-        """Retrieves the number of instances of a class"""
-        count = 0
-        if line:
-            lines = line.split()
-            if lines[0] in HBNBCommand.classes:
-                for key, obj in models.storage.all().items():
-                    if key.split('.')[0] == lines[0]:
-                        count += 1
-            else:
-                print(" ** class doesn't exist **")
-        else:
-            for key, obj in models.storage.all().items():
-                count += 1
-        print(count)
-
     def do_update(self, line):
         """Updates an instance based on the class name and id
         by adding or updating attribute and saves into to
