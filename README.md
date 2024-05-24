@@ -55,5 +55,5 @@ EOF  help  quit
 (hbnb) 
 $
 Authors
-Grace Chidinma Okoha | Emmail: okohagchidinma@gmail.com
-George Mbock Mbock
+Georges MBOCK MBOCK
+Grace Chidinma Okoha(member) | Emmail: okohagchidinma@gmail.com
