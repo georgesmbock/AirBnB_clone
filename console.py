@@ -56,13 +56,12 @@ class HBNBCommand(cmd.Cmd):
         if not line:
             print(" ** class name missing **")
             return
-        elif line not in HBNBCommand.classes:
+        if line not in HBNBCommand.classes:
             print(" ** class doesn't exist **")
             return
-        else:
-            obj = HBNBCommand.classes[line]()
-            obj.save()
-            print(obj.id)
+        obj = HBNBCommand.classes[line]()
+        obj.save()
+        print(obj.id)
 
     def do_show(self, line):
         """Prints the string representation of an
