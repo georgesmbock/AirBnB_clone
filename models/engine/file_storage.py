@@ -24,13 +24,20 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-    def all(self):
+    def all(self, cls=None):
         """This method returns the dictionary __objects
 
         Args: None
         Return: Dictionary
         """
-        return self.__objects
+        if cls is None:
+            return self.__objects
+        else:
+            ret = {
+                    key: obj for key, obj in self.__objects.items()
+                    if isinstance(obj, cls)
+                    }
+            return ret
 
     def new(self, obj):
         """This method sets in _objects the obj with key
@@ -54,7 +61,7 @@ class FileStorage:
         for key, value in self.__objects.items():
             serialized_objects[key] = value.to_dict()
 
-        with open(self.__file_path, 'w') as f:
+        with open(self.__file_path, 'a') as f:
             json.dump(serialized_objects, f)
 
     def reload(self):
@@ -73,7 +80,6 @@ class FileStorage:
                     for key, value in data.items():
                         class_name = value["__class__"]
                     obj = eval(class_name)(**value)
-                    obj_key = f"{class_name}.{obj.id}"
                     self.__objects[key] = obj
             except json.JSONDecodeError:
                 pass
