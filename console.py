@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" The Main """
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -11,8 +12,8 @@ import models
 
 
 class HBNBCommand(cmd.Cmd):
-    """The Main console"""
-    """ The prompt of teh console"""
+    """ The console """
+    """ The prompt of teh console """
     prompt = '(hbnb) '
 
     classes = {
