@@ -11,7 +11,8 @@ import models
 
 
 class HBNBCommand(cmd.Cmd):
-    """The console"""
+    """The Main console"""
+    """ The prompt of teh console"""
     prompt = '(hbnb) '
 
     classes = {
