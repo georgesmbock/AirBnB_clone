@@ -118,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
             all_obj = models.storage.all(HBNBCommand.classes[lines])
         # print([str(obj) for obj in all_obj.values()])
         else:
-        # if line[0] not in HBNBCommand.classes:
+            # if line[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
         # all_obj = models.storage.all() class_name = line[0]
