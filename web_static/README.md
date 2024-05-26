@@ -16,7 +16,7 @@ During this project, we will learn how to manipulate HTML and CSS languages. HTM
 ### TASK0: Inline styling
 Write an HTML page that displays a header and a footer.
 
-<ul>Layout:</ul>
+**Layout:**
 
 * Body
 
@@ -44,12 +44,28 @@ Write an HTML page that displays a header and a footer.
 
    * always at the bottom at the page
 
-Requirements:
+**Requirements:**
 
-* You must use the header and footer tags
+* I must use the header and footer tags
 
-* You are not allowed to import any files
+* I am not allowed to import any files
 
-* You are allowed to use the style tag in the the head tag
+* I am allowed to use the style tag in the the head tag
 
 * Use inline styling for all tags
+
+### Task1: Head styling
+
+Write an Write an HTML page that displays a header and a footer by using the style tag in the head tag (same as 0-index.html)
+
+**Requirements:**
+
+* I must use the header and footer tags
+
+* I am not allowed to import any files
+
+* No inline styling
+
+* I must use the style tag in the head tag
+
+The Layout must be exactly the same as 0-index.html
