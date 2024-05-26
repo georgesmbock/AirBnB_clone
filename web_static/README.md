@@ -69,3 +69,22 @@ Write an Write an HTML page that displays a header and a footer by using the sty
 * I must use the style tag in the head tag
 
 The Layout must be exactly the same as 0-index.html
+
+### Task2: CSS files
+
+Write an HTML page that displays a header and a footer by using CSS files (same as 1-index.html)
+
+**Requirements**
+
+* I must use the header and footer tags
+
+* No inline styling
+
+* I must have 3 CSS files:
+
+	- styles/2-common.css: for global style(ie the body style)
+	- styles/2-header.css: for header style
+
+	- syles/2-footer.css: for footer style
+
+The layout must be exactly the same as 1-index.html
