@@ -13,7 +13,7 @@ The first step is to *design/sketch/prototype* each element:
 During this project, we will learn how to manipulate HTML and CSS languages. HTML is the structure of our page, it should be the first thing to write. CSS is the styling of our page, the design. I really encourage myself to fix my HTML part before starting the styling. Indeed, without any structure, you can't apply any design.
 
 ## TASKS
-###TASK0: Inline styling
+### TASK0: Inline styling
 Write an HTML page that displays a header and a footer.
 
 <ul>Layout:</ul>
@@ -40,7 +40,7 @@ Write an HTML page that displays a header and a footer.
 
    * width: 100%
 
-   * text <span style="color: #FF0000">Best School</span> center vertically and horizontally
+   * text <span style="color: #FF0000;">Best School</span> center vertically and horizontally
 
    * always at the bottom at the page
 
