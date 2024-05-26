@@ -1,0 +1,13 @@
+/* footer style file */
+footer{
+    background-color: while;
+    height: 60px;
+    width: 100%;
+    border-top: solid 1px #CCCCCC;
+    bottom: 0px;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
