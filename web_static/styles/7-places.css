@@ -1,0 +1,25 @@
+/*.places {
+    /*position: relative;
+}
+*/
+.places article{
+    float: left;
+    width: 390px;
+    padding: 20px;
+    border: 1px solid#FF5A5F;
+    border-radius: 4px;
+    position: relative;
+    top: -2px;
+    /*font-size: 30px;*/
+    text-align: center;
+}
+
+.places #suite{
+    translate: 200px;
+    margin: 20px;
+}
+
+.places #myhome, .places #tinyhouse{
+    margin: 20px;
+}
+
