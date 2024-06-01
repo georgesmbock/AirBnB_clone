@@ -41,6 +41,42 @@ button:hover{
     padding-left: 20px;
 }
 
+.popover{
+    display: none;
+    /*color: #FAFAFA;*/
+    width: 11%;
+    border-radius: 4px;
+    list-style-type: none;
+    position: absolute;
+    z-index:10px;
+    top: 159px;
+    border: 1px solid #DDD;
+    overflow: hidden;
+}
+
+.popover ul li{
+    list-style-type: none;
+    margin: 0px -20px;
+    position: relative;
+}
+
+
+.amenities .popover ul li{
+    margin-top: 10px;
+}
+
+.locations .popover ul li{
+    top: -20px;
+}
+
+.locations .popover{
+    left: 270px;
+}
+
+.amenities .popover{
+    left: 480px;
+}
+
 .locations h3, .amenities h3{
     font-weight: 600px;
 }
@@ -52,4 +88,12 @@ button:hover{
     top: -20px;
 }
 
+.locations:hover .popover{
+    cursor: pointer;
+    display: block;
+}
 
+.amenities:hover .popover{
+    cursor: pointer;
+    display: block;
+}
